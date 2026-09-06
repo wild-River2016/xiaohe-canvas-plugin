@@ -1,0 +1,12 @@
+{
+  "name": "xiaohe-canvas",
+  "interface": {
+    "displayName": "小禾画布"
+  },
+  "plugins": [
+    {
+      "name": "xiaohe-canvas",
+      "source": "../../plugins/xiaohe-canvas"
+    }
+  ]
+}

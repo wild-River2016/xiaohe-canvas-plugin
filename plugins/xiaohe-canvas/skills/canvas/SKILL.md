@@ -11,20 +11,24 @@ description: 操作小禾画布当前网页画布，读取节点、选区、创�
 
 **必须直接调用 MCP 工具，禁止用 curl、HTTP 请求或其他方式绕过。**
 
-1. **打开画布**：如果用户还没有打开或连接网页画布，必须使用 `open-canvas` 技能，禁止要求用户手动复制 URL 或 token。
-2. **读取画布**：操作前必须先调用 `canvas_get_state`；用户提到选中内容时必须调用 `canvas_get_selection`。
-3. **创建文本**：必须调用 `canvas_create_text_node`。
-4. **生成内容**：必须调用 `canvas_generate_text`、`canvas_generate_image`、`canvas_generate_video`、`canvas_generate_audio`。
-5. **创建流程**：必须调用 `canvas_create_generation_flow`。
-6. **批量操作**：必须调用 `canvas_apply_ops`。
-7. **搜索模板**：必须调用 `templates_search`。
-8. **获取模板详情**：必须调用 `templates_get`。
+### 创建工作流（基于模板）
+1. 调用 `templates_search` 搜索相关模板
+2. 调用 `templates_get` 获取模板详情，分析节点结构
+3. 调用 `canvas_apply_ops` 批量创建节点、连线、设置视口
+
+### 读取画布
+- 操作前必须先调用 `canvas_get_state` 读取当前画布
+- 用户提到选中内容时必须调用 `canvas_get_selection`
+
+### 打开画布
+- 如果用户还没有连接画布，使用 `open-canvas` 技能打开小禾画布
 
 **禁止行为**：
 - ❌ 禁止用 curl 调用 HTTP API
 - ❌ 禁止用 shell 命令操作画布
 - ❌ 禁止模拟鼠标点击
 - ❌ 禁止要求用户手动复制 JSON
+- ❌ 禁止在没有调用 `templates_search` 的情况下说「没有相关模板」
 
 ## 节点类型
 

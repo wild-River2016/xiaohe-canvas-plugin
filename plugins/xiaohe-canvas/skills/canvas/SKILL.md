@@ -7,16 +7,24 @@ description: 操作小禾画布当前网页画布，读取节点、选区、创�
 
 你正在帮助用户操作小禾画布网页。需要理解或改动画布时，优先使用已配置的 `xiaohe-canvas` MCP 工具；不要让用户手动复制 JSON、URL 或 token。
 
-## 工作流
+## 工作流（必须遵守）
 
-- 如果用户还没有打开或连接网页画布，使用 `open-canvas` 技能打开小禾画布，不要要求用户手动复制 URL 或 token。
-- 操作前先用 `canvas_get_state` 读取当前画布；如果用户明确提到选中内容、当前节点或"这个"，先用 `canvas_get_selection`。
-- 创建单个文本内容优先用 `canvas_create_text_node`。
-- 创建生成内容优先用 `canvas_generate_text`、`canvas_generate_image`、`canvas_generate_video`、`canvas_generate_audio`。
-- 需要把提示词、配置和生成节点串成流程时，使用 `canvas_create_generation_flow` 或项目已有的流程工具。
-- 需要批量增删改、移动、连接节点或设置视口时，使用 `canvas_apply_ops`。
-- 不要模拟鼠标点击，不要要求用户手动复制 JSON。
-- 写入画布的操作会由网页侧边栏做二次确认，按当前工具结果继续推进即可。
+**必须直接调用 MCP 工具，禁止用 curl、HTTP 请求或其他方式绕过。**
+
+1. **打开画布**：如果用户还没有打开或连接网页画布，必须使用 `open-canvas` 技能，禁止要求用户手动复制 URL 或 token。
+2. **读取画布**：操作前必须先调用 `canvas_get_state`；用户提到选中内容时必须调用 `canvas_get_selection`。
+3. **创建文本**：必须调用 `canvas_create_text_node`。
+4. **生成内容**：必须调用 `canvas_generate_text`、`canvas_generate_image`、`canvas_generate_video`、`canvas_generate_audio`。
+5. **创建流程**：必须调用 `canvas_create_generation_flow`。
+6. **批量操作**：必须调用 `canvas_apply_ops`。
+7. **搜索模板**：必须调用 `templates_search`。
+8. **获取模板详情**：必须调用 `templates_get`。
+
+**禁止行为**：
+- ❌ 禁止用 curl 调用 HTTP API
+- ❌ 禁止用 shell 命令操作画布
+- ❌ 禁止模拟鼠标点击
+- ❌ 禁止要求用户手动复制 JSON
 
 ## 节点类型
 
